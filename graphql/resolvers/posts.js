@@ -1,4 +1,4 @@
-const { AuthenticationError} = require('apollo-server');
+const { AuthenticationError, UserInputError } = require('apollo-server');
 
 const Post = require('../../models/Post');
 const checkAuth = require('../../utils/checkAuth');
@@ -32,6 +32,8 @@ const postsResolvers = {
         createdAt: new Date().toISOString(),
       });
 
+      context.pubSub.publish('NEW_POST', { newPost });
+
       return  await newPost.save();
     },
 
@@ -50,6 +52,34 @@ const postsResolvers = {
       } catch (error) {
         throw new Error(error);
       }
+    },
+
+    likePost: async (parent, args, context, info) => {
+      const user = checkAuth(context);
+      const post = await Post.findById(args.postId);
+
+      if (post) {
+        if (post.likes.find(like => like.userId === user.id)) {
+          post.likes = post.likes.filter(like => like.userId !== user.id);
+        } else {
+          post.likes.push({
+            userName: user.userName,
+            userId: user.id,
+            createdAt: new Date().toISOString(),
+          });
+        }
+        await post.save();
+
+        return post;
+      } else {
+        throw new UserInputError('Post not found');
+      }
+    },
+  },
+
+  Subscription: {
+    newPost: {
+      subscribe: (parent, args, context, info) => context.pubSub.asyncIterator('NEW_POST'),
     }
   }
 };

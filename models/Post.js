@@ -7,10 +7,12 @@ const postSchema = new Schema({
   comments: [{
     body: String,
     userName: String,
+    userId: String,
     createdAt: String,
   }],
   likes: [{
     userName: String,
+    userId: String,
     createdAt: String,
   }],
   user: {
