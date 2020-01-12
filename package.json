@@ -14,6 +14,8 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
+    "serve": "index.js",
     "start": "nodemon index.js"
-  }
+  },
+  "devDependencies": {}
 }
