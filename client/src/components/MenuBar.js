@@ -4,7 +4,7 @@ import { Menu } from 'semantic-ui-react';
 
 const MenuBar = () => {
   const pathName = window.location.pathname;
-  const path = pathName === '/' ? pathName : pathName.substr(1);
+  const path = pathName === '/' ? 'home' : pathName.substr(1);
   const [activeItem, setActiveItem] = useState(path);
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
