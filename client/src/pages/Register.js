@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import { Form } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import { Button } from "semantic-ui-react";
-import gql from "graphql-tag";
 
 import { useFormValues } from "../util/hooks";
 import { AuthContext } from "../context/auth";
+import { REGISTER_USER } from "../util/graphql";
 
 const Register = props => {
   const authContext = useContext(AuthContext);
@@ -93,17 +93,5 @@ const Register = props => {
     </div>
   );
 };
-
-const REGISTER_USER = gql`
-  mutation registerUser ($userName: String!, $email: String!, $password: String!, $confirmPassword: String!) {
-    register ( registerInput: { userName: $userName, email: $email, password: $password, confirmPassword: $confirmPassword} ) {
-      id
-      userName
-      email
-      token
-      createdAt
-    }
-  }
-`;
 
 export default Register;
