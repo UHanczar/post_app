@@ -25,6 +25,11 @@ const postsResolvers = {
   Mutation: {
     createPost: async (parent, args, context, info) => {
       const user = checkAuth(context);
+
+      if (!args.body) {
+        throw new UserInputError('Post should contain text');
+      }
+
       const newPost = new Post({
         body: args.body,
         user: user.id,

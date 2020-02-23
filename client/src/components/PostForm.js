@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 
 import { useFormValues } from "../util/hooks";
 import { useMutation } from "@apollo/react-hooks";
@@ -30,17 +30,30 @@ const PostForm = () => {
   }
 
   return (
-    <Form onSubmit={onFormSubmit}>
-      <Form.Field>
-        <Form.Input
-          type='text'
-          placeholder='Enter post!'
-          name='body'
-          value={formValues.body}
-          onChange={onFormValueChange}
-        />
-      </Form.Field>
-    </Form>
+    <>
+      <Form onSubmit={onFormSubmit}>
+        <Form.Field>
+          <Form.Input
+            type='text'
+            placeholder='Enter post!'
+            name='body'
+            value={formValues.body}
+            error={error}
+            onChange={onFormValueChange}
+          />
+
+          <Button type="submit" color="teal">Submit</Button>
+        </Form.Field>
+      </Form>
+
+      {error && (
+        <div className="ui error message" style={{ marginBottom: 20 }}>
+          <ul className="list">
+            <li>{error.graphQLErrors[0].message}</li>
+          </ul>
+        </div>
+      )}
+    </>
   );
 };
 
