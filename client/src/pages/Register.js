@@ -18,7 +18,7 @@ const Register = props => {
 
   const [registerErrors, setRegisterErrors] = useState({});
 
-  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER, {
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
       authContext.login(result.data.register);
       props.history.push('/');

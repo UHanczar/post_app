@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Button, Icon, Label } from 'semantic-ui-react';
 
 import { LIKE_POST_MUTATION } from "../util/graphql";
+import CustomPopup from '../util/CustomPopup';
 
 const LikeButton = props => {
   const { user, postId, likes, likeCount } = props;
@@ -41,13 +42,15 @@ const LikeButton = props => {
   );
 
   return (
-    <Button as='div' labelPosition='right'>
-      {likeButton}
+    <CustomPopup content={liked ? 'Unlike' : 'Like'}>
+      <Button as='div' labelPosition='right'>
+        {likeButton}
 
-      <Label basic color='teal' pointing='left'>
-        {likeCount}
-      </Label>
-    </Button>
+        <Label basic color='teal' pointing='left'>
+          {likeCount}
+        </Label>
+      </Button>
+    </CustomPopup>
   );
 };
 

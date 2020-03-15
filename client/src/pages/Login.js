@@ -15,7 +15,7 @@ const Login = props => {
   });
 
   const [loginErrors, setLoginErrors] = useState({});
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, result) {
       authContext.login(result.data.login);
       props.history.push('/');

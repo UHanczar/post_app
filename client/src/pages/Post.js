@@ -9,6 +9,7 @@ import LikeButton from '../components/LikeButton';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import DeleteButton from '../components/DeleteButton';
+import CustomPopup from '../util/CustomPopup';
 
 const Post = props => {
   const { postId } = props.match.params;
@@ -16,7 +17,7 @@ const Post = props => {
   const commentInputRef = useRef(null);
   const [comment, setComment] = useState('');
 
-  const { data, loading, error } = useQuery(FETCH_POST_QUERY, {
+  const { data, loading } = useQuery(FETCH_POST_QUERY, {
     variables: {
       postId,
     },
@@ -33,7 +34,7 @@ const Post = props => {
     }
   });
 
-  const onCommentButtonClick = () => console.log('ON_COMMENT_BUTTON_CLICK');
+  const onCommentButtonClick = () => commentInputRef.current.focus();
 
   const deleteButtonCallback = () => props.history.push('/');
 
@@ -41,7 +42,7 @@ const Post = props => {
   if (loading) {
     postMarkup = (<div>Loading...</div>);
   } else {
-    const { getPost: { id, userId, userName, body, createdAt, likeCount, likes, comments, commentCount } } = data;
+    const { getPost: { id, userName, body, createdAt, likeCount, likes, comments, commentCount } } = data;
 
     postMarkup = (
       <Grid>
@@ -74,20 +75,22 @@ const Post = props => {
                   likeCount={likeCount}
                 />
 
-                <Button
-                  as='div'
-                  labelPosition='right'
-                  onClick={onCommentButtonClick}
-                >
+                <CustomPopup content='Write a comment'>
                   <Button
-                    basic
-                    color='blue'
+                    as='div'
+                    labelPosition='right'
+                    onClick={onCommentButtonClick}
                   >
-                    <Icon name='comments' />
-                  </Button>
+                    <Button
+                      basic
+                      color='blue'
+                    >
+                      <Icon name='comments' />
+                    </Button>
 
-                  <Label basic color='blue' pointing='left'>{commentCount}</Label>
-                </Button>
+                    <Label basic color='blue' pointing='left'>{commentCount}</Label>
+                  </Button>
+                </CustomPopup>
 
                 {user && user.userName === userName && (
                   <DeleteButton postId={id} onDeleteCallback={deleteButtonCallback} />
