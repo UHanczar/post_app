@@ -7,6 +7,7 @@
   "dependencies": {
     "apollo-server": "^2.9.14",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "jsonwebtoken": "^8.5.1",
@@ -17,7 +18,5 @@
     "serve": "nodemon index.js",
     "start": "node index.js"
   },
-  "devDependencies": {
-    "dotenv": "^8.2.0"
-  }
+  "devDependencies": {}
 }
