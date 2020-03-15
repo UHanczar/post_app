@@ -17,5 +17,7 @@
     "serve": "nodemon index.js",
     "start": "node index.js"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }

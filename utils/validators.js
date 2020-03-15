@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET_KEY } = require('../config');
-
 const validateUserRegisterInput = (userName, password, confirmPassword, email) => {
   const errors = {};
 
@@ -55,8 +53,8 @@ const generateUserToken = (userData) => {
     id: userData.id,
     userName: userData.userName,
     email: userData.email,
-  }, JWT_SECRET_KEY, { expiresIn: '1h'});
-}
+  }, process.env.JWT_SECRET_KEY, { expiresIn: '1h'});
+};
 
 module.exports = {
   validateUserRegisterInput,
